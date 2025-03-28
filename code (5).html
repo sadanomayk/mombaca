@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reinauguração Mombaça - Performance Energia Solar</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <!-- Fim Favicons -->
+
+    <style>
+        /* --- General Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f0f0f0; color: #333; width: 100%; overflow-x: hidden; position: relative; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 20px; overflow: hidden; }
+
+        /* --- Header --- */
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid #ffcc00;
+            position: relative; /* Needed for absolute positioned banner */
+            padding-top: 70px; /* Increased padding for the fixed banner */
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            min-height: 50px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            gap: 15px; /* Espaço entre a imagem e o texto */
+        }
+        .logo-icon {
+            width: 35px; /* Smaller icon */
+            height: 35px;
+            background-color: #ffcc00;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            background: radial-gradient(circle, #ffcc00 60%, #003366 62%);
+        }
+        .logo-img {
+            height: 80px; /* Aumentado de 60px para 80px */
+            width: auto;
+            object-fit: contain;
+        }
+
+        .reinauguracao-faixa {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #ff0000;
+            color: #ffcc00;
+            font-weight: bold;
+            padding: 12px 10px; /* Adjusted padding */
+            font-size: 18px; /* Adjusted font size */
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            padding: 50px 20px; /* Adjusted padding */
+            text-align: center;
+            background: linear-gradient(135deg, #000000 0%, #003366 100%);
+            color: white;
+        }
+        .hero-title {
+            font-size: 42px; /* Adjusted size */
+            margin-bottom: 15px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .hero-subtitle {
+            font-size: 22px; /* Adjusted size */
+            margin-bottom: 25px;
+            max-width: 700px; /* Limit width */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* --- .promo-highlight removed --- */
+
+        #countdown-timer {
+            font-size: 20px; /* Adjusted size */
+            color: #ffcc00;
+            margin: 20px auto 30px;
+            padding: 10px 15px; /* Adjusted padding */
+            background-color: rgba(0, 0, 0, 0.4); /* Darker background */
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid #ffcc0055; /* Subtle border */
+        }
+        #countdown-timer span {
+            font-weight: bold;
+            color: white;
+            padding: 0 3px; /* Adjusted spacing */
+        }
+        .confianca-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px; /* Adjusted gap */
+            margin: 30px auto 20px; /* Adjusted margin */
+            max-width: 800px;
+        }
+        .badge {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.15); /* Slightly lighter */
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .badge-icon { font-size: 18px; margin-right: 8px; color: #ffcc00; }
+        .badge-text { font-size: 14px; font-weight: bold; color: white; }
+
+        /* --- Preços Section --- */
+        .precos-section { padding: 50px 15px; background-color: white; }
+        .precos-titulo { text-align: center; font-size: 32px; margin-bottom: 30px; color: #003366; }
+        .tabela-precos-container {
+            overflow-x: auto;
+            margin: 0 -15px; /* Compensa o padding do container pai */
+            padding: 0 15px;
+            -webkit-overflow-scrolling: touch; /* Melhor rolagem em iOS */
+        }
+        .tabela-precos {
+            width: 100%;
+            min-width: auto; /* Remove largura mínima fixa */
+            max-width: 900px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden;
+        }
+        .tabela-precos thead { background-color: #003366; color: white; }
+        .tabela-precos th { padding: 12px 10px; text-align: center; font-size: 16px; }
+        .tabela-precos tbody tr:nth-child(odd) { background-color: #f8f8f8; }
+        .tabela-precos tbody tr:nth-child(even) { background-color: #eee; }
+        .tabela-precos td { padding: 12px 10px; text-align: center; font-size: 15px; border-bottom: 1px solid #ddd; }
+        .tabela-precos tbody tr:hover { background-color: #ffcc0033; }
+        .tabela-precos .preco-pix { font-weight: bold; color: #ff0000; }
+        .tabela-precos td:first-child { text-align: left; padding-left: 15px; font-weight: 500;} /* Align first column */
+        .tabela-precos th:first-child { text-align: left; padding-left: 15px;}
+
+        /* --- Beneficios Section --- */
+        .beneficios-section { padding: 50px 20px; background-color: #003366; color: white; }
+        .beneficios-titulo { text-align: center; font-size: 32px; margin-bottom: 35px; color: #ffcc00; }
+        .beneficios-container {
+            display: flex;
+            justify-content: center; /* Center items */
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto;
+            gap: 25px; /* Spacing between cards */
+        }
+        .beneficio-card {
+            width: 300px; /* Base width */
+            text-align: center;
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .beneficio-card:hover { transform: translateY(-8px); }
+        .beneficio-icone {
+            width: 60px; height: 60px;
+            background-color: #ffcc00;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px; font-weight: bold; color: #003366;
+        }
+        .beneficio-titulo { font-size: 20px; margin-bottom: 10px; color: #ffcc00; }
+        .beneficio-descricao { font-size: 16px; line-height: 1.5; }
+
+        /* --- Disclaimer for Financing --- */
+        .financiamento-aviso {
+            text-align: center;
+            font-size: 13px; /* Smaller font */
+            color: #aaa; /* Lighter color */
+            max-width: 700px;
+            margin: 25px auto 0; /* Spacing below benefits cards */
+            padding: 0 20px;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section { padding: 60px 20px; text-align: center; background: linear-gradient(135deg, #003366 0%, #000000 100%); color: white; }
+        .cta-titulo { font-size: 32px; margin-bottom: 20px; color: #ffcc00; }
+        .cta-texto { font-size: 18px; max-width: 750px; margin: 0 auto 30px; line-height: 1.6; }
+        .cta-botao { /* Now styles the <a> tag */
+            display: inline-block; padding: 16px 35px;
+            background-color: #ff0000; color: white !important; /* Ensure text color is white */
+            font-size: 19px; font-weight: bold; text-decoration: none; /* Remove underline */
+            border-radius: 50px; transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); border: none; cursor: pointer;
+        }
+        .cta-botao:hover { background-color: #d10000; transform: scale(1.05); color: white !important;}
+
+        /* --- Galeria Section --- */
+        .galeria-section { padding: 50px 15px; background-color: white; }
+        .galeria-titulo { text-align: center; font-size: 32px; margin-bottom: 30px; color: #003366; }
+        .galeria-container { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1200px; margin: 0 auto; gap: 15px; }
+        .galeria-item {
+            width: 280px; height: 180px; /* Slightly smaller */
+            overflow: hidden; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .galeria-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .galeria-item:hover img { transform: scale(1.1); }
+
+        /* --- Depoimentos Section --- */
+        .depoimentos-section { padding: 50px 20px; background: linear-gradient(135deg, #003366 0%, #002244 100%); color: white; }
+        .depoimentos-titulo { text-align: center; font-size: 32px; margin-bottom: 40px; color: #ffcc00; }
+        .depoimentos-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; max-width: 1200px; margin: 0 auto; }
+        .depoimento-card {
+            width: 330px; padding: 25px; background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column;
+        }
+        .depoimento-estrelas { color: #ffcc00; font-size: 22px; margin-bottom: 15px; text-align: center; }
+        .depoimento-texto { font-size: 16px; line-height: 1.6; margin-bottom: 20px; font-style: italic; flex-grow: 1; }
+        .depoimento-autor { display: flex; align-items: center; margin-top: auto; justify-content: center; /* Center author info */ }
+        .depoimento-info { display: flex; flex-direction: column; text-align: center; width: 100%; }
+        .depoimento-nome { font-size: 17px; font-weight: bold; margin-bottom: 5px; }
+        .depoimento-cidade { font-size: 14px; opacity: 0.8; }
+
+        /* --- Resultados Section --- */
+        .resultados-section { padding: 50px 20px; background-color: #f9f9f9; }
+        .resultados-titulo { text-align: center; font-size: 32px; margin-bottom: 40px; color: #003366; }
+        .resultados-container {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 20px; max-width: 1000px; /* Adjusted max-width */
+            margin: 0 auto;
+        }
+        .resultado-card {
+            width: 180px; /* Adjusted width */
+            padding: 20px; /* Adjusted padding */
+            text-align: center; background-color: white; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            transition: transform 0.3s; display: flex; flex-direction: column;
+            justify-content: center; min-height: 160px;
+        }
+        .resultado-card:hover { transform: translateY(-8px); }
+        .resultado-numero { font-size: 36px; font-weight: bold; color: #ff0000; margin-bottom: 8px; }
+        .resultado-texto { font-size: 15px; color: #333; line-height: 1.3; }
+
+        /* --- Aviso Legal (Main) --- */
+        .aviso-legal {
+            padding: 15px 20px; background-color: #e9e9e9; /* Slightly darker */
+            color: #555; text-align: center; font-size: 14px;
+            margin-top: 30px; /* Add some space before footer */
+        }
+
+        /* --- Footer --- */
+        footer { background-color: #003366; color: white; padding: 40px 20px 20px; text-align: center; }
+        .footer-container {
+            display: flex; justify-content: space-around; /* Adjust as needed */
+            flex-wrap: wrap;
+            max-width: 1200px; margin: 0 auto 30px; text-align: left; gap: 20px;
+        }
+        .footer-coluna { width: 100%; max-width: 350px; /* Allow more width if needed */ margin: 10px; } /* Adjusted max-width */
+        .footer-titulo {
+            font-size: 18px; margin-bottom: 15px; color: #ffcc00;
+            border-bottom: 1px solid #ffcc0088; padding-bottom: 5px; display: inline-block;
+        }
+        .footer-lista { list-style: none; padding: 0; }
+        .footer-lista li { margin-bottom: 8px; font-size: 15px; color: #eee; /* Style li directly */ line-height: 1.5;}
+        .footer-coluna p { font-size: 15px; line-height: 1.5; color: #eee;}
+        .copyright { border-top: 1px solid rgba(255, 255, 255, 0.15); padding-top: 20px; font-size: 13px; margin-top: 20px; color: #ccc;}
+
+        /* --- Media Queries --- */
+        @media (max-width: 1024px) { /* Tablet */
+            .beneficio-card { width: 31%; min-width: 280px; }
+            .resultado-card { width: 22%; min-width: 160px;}
+            .galeria-item { width: 30%; min-width: 240px;}
+             .depoimento-card { width: 45%; min-width: 300px;}
+             .footer-coluna { max-width: 300px; }
+        }
+
+        @media (max-width: 768px) { /* Smaller Tablet / Large Phone */
+            header { padding-top: 85px; }
+            .reinauguracao-faixa { font-size: 16px; padding: 10px 8px; }
+            .logo { font-size: 22px; }
+            .hero-title { font-size: 34px; }
+            .hero-subtitle { font-size: 19px; }
+            #countdown-timer { font-size: 17px; padding: 8px 12px; }
+            .precos-titulo, .beneficios-titulo, .cta-titulo, .galeria-titulo, .depoimentos-titulo, .resultados-titulo { font-size: 28px; }
+            .tabela-precos th, .tabela-precos td { font-size: 14px; padding: 10px 8px; }
+            .beneficios-container { gap: 20px; }
+            .beneficio-card { width: 46%; min-width: 250px; }
+            .financiamento-aviso { font-size: 12px; }
+            .cta-texto { font-size: 17px;}
+            .cta-botao { font-size: 18px; padding: 15px 30px; }
+            .galeria-item { width: 45%; min-width: 200px;}
+            .depoimento-card { width: 85%; max-width: 400px; }
+            .resultados-container { gap: 15px;}
+            .resultado-card { width: 45%; min-width: 140px; min-height: 140px; }
+            .resultado-numero { font-size: 30px;}
+            .resultado-texto { font-size: 14px;}
+            .footer-container { flex-direction: column; align-items: center; text-align: center; } /* Center remaining columns */
+            .footer-coluna { width: 80%; max-width: 400px; margin-bottom: 25px; } /* Adjust width/max-width */
+            .footer-titulo { display: block; border-bottom: none; margin-bottom: 10px;}
+            .footer-lista li { text-align: center; } /* Center list items */
+            body {
+                overflow-x: hidden;
+            }
+            
+            .container {
+                width: 100%;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            /* Ajuste nos badges de confiança */
+            .confianca-badges {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .badge {
+                width: calc(50% - 10px);
+                min-width: unset;
+            }
+            .logo-img {
+                height: 70px; /* Aumentado de 50px para 70px */
+            }
+        }
+
+        @media (max-width: 480px) { /* Mobile */
+            header { padding-top: 85px; }
+             .reinauguracao-faixa { font-size: 13px; letter-spacing: 0.5px; padding: 8px 5px;}
+             .logo { font-size: 20px; }
+             .logo-icon { width: 30px; height: 30px; margin-right: 8px;}
+            .hero-title { font-size: 28px; }
+            .hero-subtitle { font-size: 17px; }
+            #countdown-timer { font-size: 15px; padding: 6px 10px; margin-bottom: 20px; }
+            .badge { padding: 6px 10px; }
+            .badge-text { font-size: 12px; }
+            .precos-titulo, .beneficios-titulo, .cta-titulo, .galeria-titulo, .depoimentos-titulo, .resultados-titulo { font-size: 24px; margin-bottom: 25px;}
+             .tabela-precos { min-width: 300px;}
+             .tabela-precos th, .tabela-precos td { font-size: 12px; padding: 8px 5px; }
+            .beneficio-card { width: 90%; max-width: 320px; }
+            .beneficio-titulo { font-size: 18px; }
+            .beneficio-descricao { font-size: 15px; }
+            .cta-texto { font-size: 16px;}
+             .cta-botao { font-size: 17px; padding: 14px 28px; }
+             .galeria-item { width: 85%; max-width: 300px; height: auto; aspect-ratio: 3 / 2; }
+             .depoimento-card { width: 95%; padding: 20px;}
+             .depoimento-texto { font-size: 15px;}
+            .resultados-container { gap: 10px;}
+             .resultado-card { width: 45%; min-width: 120px; padding: 15px; min-height: 120px;}
+             .resultado-numero { font-size: 26px;}
+             .resultado-texto { font-size: 13px;}
+             .footer-coluna { width: 90%; }
+             .copyright { font-size: 12px;}
+             /* Ajustes gerais de container */
+             .container, section {
+                 padding-left: 10px;
+                 padding-right: 10px;
+                 overflow-x: hidden;
+             }
+             
+             /* Ajuste na tabela de preços */
+             .tabela-precos th, 
+             .tabela-precos td {
+                 padding: 8px 4px;
+                 font-size: 11px;
+             }
+             .tabela-precos td:first-child {
+                 padding-left: 4px;
+             }
+             
+             /* Ajustes nos cards de benefícios */
+             .beneficios-container {
+                 margin: 0 -10px;
+                 padding: 0 10px;
+             }
+             .beneficio-card {
+                 width: 100%;
+                 margin: 0 auto 15px;
+                 padding: 15px;
+             }
+             
+             /* Ajustes na galeria */
+             .galeria-container {
+                 margin: 0 -10px;
+                 padding: 0 10px;
+             }
+             .galeria-item {
+                 width: 100%;
+                 margin: 0 0 15px 0;
+             }
+             
+             /* Ajustes nos depoimentos */
+             .depoimentos-container {
+                 margin: 0 -10px;
+                 padding: 0 10px;
+             }
+             .depoimento-card {
+                 width: 100%;
+                 margin: 0 0 15px 0;
+                 padding: 15px;
+             }
+             
+             /* Ajustes nos resultados */
+             .resultados-container {
+                 margin: 0 -5px;
+                 padding: 0 5px;
+             }
+             .resultado-card {
+                 width: calc(50% - 10px);
+                 min-width: unset;
+                 padding: 10px;
+                 margin: 5px;
+             }
+             .resultado-numero {
+                 font-size: 22px;
+             }
+             .resultado-texto {
+                 font-size: 12px;
+             }
+             
+             /* Ajustes no footer */
+             .footer-container {
+                 padding: 0 10px;
+             }
+             .footer-coluna {
+                 width: 100%;
+                 padding: 0;
+                 margin: 0 0 20px 0;
+             }
+            .logo-img {
+                height: 60px; /* Aumentado de 40px para 60px */
+            }
+        }
+
+        /* Ajustes gerais de responsividade */
+        * {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Ajustes para dispositivos móveis */
+        @media (max-width: 768px) {
+            /* Ajustes gerais */
+            section {
+                width: 100%;
+                padding-left: 15px;
+                padding-right: 15px;
+                box-sizing: border-box;
+            }
+
+            /* Ajuste na tabela de preços */
+            .tabela-precos-container {
+                margin: 0;
+                padding: 0 15px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* Ajustes nos containers */
+            .beneficios-container,
+            .galeria-container,
+            .depoimentos-container,
+            .resultados-container {
+                margin: 0;
+                padding: 0 15px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Ajustes para telas muito pequenas */
+            section {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .container, 
+            .tabela-precos-container,
+            .beneficios-container,
+            .galeria-container,
+            .depoimentos-container,
+            .resultados-container {
+                padding: 0 10px;
+            }
+
+            /* Remove margens negativas */
+            .beneficios-container,
+            .galeria-container,
+            .depoimentos-container,
+            .resultados-container {
+                margin: 0;
+            }
+
+            /* Ajuste nos cards */
+            .beneficio-card,
+            .galeria-item,
+            .depoimento-card,
+            .resultado-card {
+                width: 100%;
+                margin: 0 0 15px 0;
+                box-sizing: border-box;
+            }
+
+            /* Exceção para os cards de resultado que devem manter 2 colunas */
+            .resultado-card {
+                width: calc(50% - 10px);
+            }
+        }
+
+        /* Ajustes específicos para a tabela em dispositivos móveis */
+        @media (max-width: 480px) {
+            .tabela-precos {
+                font-size: 12px;
+                margin: 0;
+                width: 100%;
+            }
+
+            .tabela-precos th,
+            .tabela-precos td {
+                padding: 6px 4px;
+            }
+
+            .tabela-precos td:first-child {
+                padding-left: 4px;
+            }
+        }
+
+        /* Ajustes no logo */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 20px;
+                gap: 10px;
+            }
+            
+            .logo-img {
+                height: 60px; /* Aumentado de 40px para 60px */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="reinauguracao-faixa">REINAUGURAÇÃO EM MOMBAÇA - 3 e 4 DE ABRIL - CONDIÇÕES ESPECIAIS</div>
+        <div class="logo-container">
+            <div class="logo">
+                <img src="logo.png" alt="Performance Logo" class="logo-img">
+                
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <h1 class="hero-title">Economize na sua conta de luz!</h1>
+        <h2 class="hero-subtitle">Invista em energia solar com os melhores preços do mercado na nossa reinauguração em Mombaça!</h2>
+        <!-- Countdown Timer -->
+        <div id="countdown-timer">
+             A PROMOÇÃO TERMINA EM:
+             <span id="days">00</span>d :
+             <span id="hours">00</span>h :
+             <span id="minutes">00</span>m :
+             <span id="seconds">00</span>s
+        </div>
+        <div class="confianca-badges">
+            <div class="badge">
+                <div class="badge-icon">✓</div>
+                <div class="badge-text">Empresa Certificada</div>
+            </div>
+            <div class="badge">
+                <div class="badge-icon">⚡</div>
+                <div class="badge-text">Tecnologia Premium</div>
+            </div>
+            <div class="badge">
+                <div class="badge-icon">🔧</div>
+                <div class="badge-text">Suporte e Garantia</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="precos-section">
+        <h2 class="precos-titulo">Ofertas Especiais de Reinauguração (Mombaça)</h2>
+        <div class="tabela-precos-container">
+            <table class="tabela-precos">
+                <thead>
+                    <tr>
+                        <th>Geração Média Mensal</th>
+                        <th>18x no Cartão (R$)</th>
+                        <th>Pix (R$) <small>(c/ 15% desc.)</small></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr> <td>300 kWh</td> <td>8.250</td> <td class="preco-pix">7.000</td> </tr>
+                    <tr> <td>600 kWh</td> <td>12.950</td> <td class="preco-pix">11.000</td> </tr>
+                    <tr> <td>800 kWh</td> <td>17.650</td> <td class="preco-pix">15.000</td> </tr>
+                    <tr> <td>1.000 kWh</td> <td>19.900</td> <td class="preco-pix">16.900</td> </tr>
+                    <tr> <td>1.500 kWh</td> <td>27.100</td> <td class="preco-pix">23.000</td> </tr>
+                    <tr> <td>2.000 kWh</td> <td>36.550</td> <td class="preco-pix">31.000</td> </tr>
+                    <tr> <td>3.000 kWh</td> <td>58.900</td> <td class="preco-pix">50.000</td> </tr>
+                    <!-- Note: Add more rows if needed -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="beneficios-section">
+        <h2 class="beneficios-titulo">Condições de Pagamento Exclusivas</h2>
+        <div class="beneficios-container">
+            <div class="beneficio-card">
+                <div class="beneficio-icone">72x</div>
+                <h3 class="beneficio-titulo">Financiamento + Carência</h3>
+                <p class="beneficio-descricao">Parcele seu sistema em <strong>até 72x</strong>. E mais: tenha <strong>carência de até 120 dias</strong> para começar a pagar! Economize antes da primeira parcela.</p>
+            </div>
+            <div class="beneficio-card">
+                <div class="beneficio-icone">18x</div>
+                <h3 class="beneficio-titulo">Cartão de Crédito</h3>
+                <p class="beneficio-descricao">Prefere usar o cartão? Pague em <strong>até 18x</strong> com parcelas fixas. Praticidade e controle para o seu orçamento.</p>
+            </div>
+            <div class="beneficio-card">
+                <div class="beneficio-icone">Pix</div>
+                <h3 class="beneficio-titulo">Desconto Pix / À Vista</h3>
+                <p class="beneficio-descricao">Aproveite <strong>15% de desconto</strong> imperdível com nosso cupom especial para pagamento à vista via Pix. O melhor preço da região!</p>
+            </div>
+        </div>
+         <!-- Disclaimer specific to financing -->
+         <div class="financiamento-aviso">
+            *A aprovação do financiamento, os valores exatos das parcelas e o prazo de carência estão sujeitos à análise de crédito individual de cada CPF/CNPJ. Consulte um de nossos especialistas para verificar as condições aplicáveis ao seu perfil.
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2 class="cta-titulo">Não Perca Tempo, Gere Sua Própria Energia!</h2>
+        <p class="cta-texto">Aproveite as condições únicas da nossa reinauguração em <strong>Mombaça, dias 3 e 4 de Abril</strong>. Seja para sua casa, comércio ou indústria, temos a solução ideal. Fale conosco!</p>
+        <!-- Changed button to a link for WhatsApp -->
+        <a href="https://wa.me/5588981717664?text=Ol%C3%A1!%20Vi%20a%20promo%C3%A7%C3%A3o%20de%20reinaugura%C3%A7%C3%A3o%20em%20Momba%C3%A7a%20e%20gostaria%20de%20um%20or%C3%A7amento." class="cta-botao" target="_blank">QUERO UM ORÇAMENTO GRÁTIS</a>
+    </section>
+
+    <!--<section class="galeria-section">
+        <h2 class="galeria-titulo">Conheça Nossos Projetos</h2>
+        <div class="galeria-container">
+             
+            <div class="galeria-item"><img src="https://via.placeholder.com/300x200/003366/FFFFFF?text=Projeto+Residencial" alt="Instalação residencial"></div>
+            <div class="galeria-item"><img src="https://via.placeholder.com/300x200/004477/FFFFFF?text=Projeto+Comercial" alt="Instalação comercial"></div>
+            <div class="galeria-item"><img src="https://via.placeholder.com/300x200/005588/FFFFFF?text=Projeto+Industrial" alt="Instalação industrial"></div>
+            <div class="galeria-item"><img src="https://via.placeholder.com/300x200/006699/FFFFFF?text=Equipe+Instalando" alt="Equipe instalando"></div>
+            <div class="galeria-item"><img src="https://via.placeholder.com/300x200/0077AA/FFFFFF?text=Cliente+Satisfeito" alt="Cliente satisfeito"></div>
+            <div class="galeria-item"><img src="https://via.placeholder.com/300x200/0088BB/FFFFFF?text=Painéis+Solares" alt="Painéis solares"></div>
+        </div>
+    </section>-->
+
+    <section class="depoimentos-section">
+        <h2 class="depoimentos-titulo">O Que Nossos Clientes Dizem</h2>
+        <div class="depoimentos-container">
+            <div class="depoimento-card">
+                <div class="depoimento-estrelas">★★★★★</div>
+                <p class="depoimento-texto">"Instalei o sistema de 1.000 kWh e minha conta de luz reduziu drasticamente! O atendimento da Performance foi nota 10, super atenciosos."</p>
+                <div class="depoimento-autor">
+                    <div class="depoimento-info">
+                        <h4 class="depoimento-nome">Roberto Almeida</h4>
+                        <p class="depoimento-cidade">Mombaça, CE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="depoimento-card">
+                <div class="depoimento-estrelas">★★★★★</div>
+                <p class="depoimento-texto">"Escolhi o financiamento e valeu muito a pena. As parcelas cabem no bolso e a economia na conta de energia é real. Recomendo demais!"</p>
+                <div class="depoimento-autor">
+                    <div class="depoimento-info">
+                        <h4 class="depoimento-nome">Mariana Costa</h4> <!-- Nome alterado -->
+                        <p class="depoimento-cidade">Quixadá, CE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="depoimento-card">
+                <div class="depoimento-estrelas">★★★★★</div>
+                <p class="depoimento-texto">"Para minha empresa, a energia solar foi um ótimo investimento. A Performance cuidou de tudo, instalação rápida e profissional."</p>
+                <div class="depoimento-autor">
+                    <div class="depoimento-info">
+                        <h4 class="depoimento-nome">Carlos Mendes</h4>
+                        <p class="depoimento-cidade">Canindé, CE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resultados-section">
+        <h2 class="resultados-titulo">Nossos Números e Garantias</h2>
+        <div class="resultados-container">
+            <div class="resultado-card">
+                <div class="resultado-numero">1000+</div>
+                <div class="resultado-texto">Sistemas Instalados na Região</div>
+            </div>
+             <div class="resultado-card">
+                <div class="resultado-numero">85%</div>
+                <div class="resultado-texto">Economia Média na Conta de Luz</div>
+            </div>
+            <div class="resultado-card">
+                <div class="resultado-numero">3 anos</div>
+                <div class="resultado-texto">Suporte Técnico e Monitoramento</div>
+            </div>
+             <div class="resultado-card">
+                <div class="resultado-numero">10 anos</div>
+                <div class="resultado-texto">Garantia do Inversor Solar</div>
+            </div>
+             <div class="resultado-card">
+                <div class="resultado-numero">25 anos</div>
+                <div class="resultado-texto">Garantia de Performance das Placas</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="aviso-legal">
+        <p>Promoção de Reinauguração válida exclusivamente para novos contratos fechados até 05 de Abril de 2024 (12:00 PM), para instalações na área de cobertura de Mombaça e região.</p> <!-- Updated end date in text -->
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-coluna">
+                <h3 class="footer-titulo">Performance Energia Solar</h3>
+                <p>Sua melhor escolha em energia limpa e economia sustentável no Ceará.</p>
+            </div>
+            <div class="footer-coluna">
+                <h3 class="footer-titulo">Contato</h3>
+                <ul class="footer-lista">
+                    <li>WhatsApp: (88) 98171-7664</li>
+                    <li>Endereço: R. Cel. José Aderaldo, 257 - Centro, Mombaça - CE, 63610-000</li>
+                </ul>
+            </div>
+             <!-- Coluna "Navegue" removida -->
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Performance Energia Solar - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Countdown Timer ---
+            // TARGET DATE: April 5th, 2024 at 12:00:00 (Midday)
+            const targetDate = new Date("2025-04-05T12:00:00").getTime();
+
+            const countdownElement = document.getElementById('countdown-timer');
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+
+            // Check if all timer elements exist before starting
+            if (countdownElement && daysEl && hoursEl && minutesEl && secondsEl) {
+                let interval; // Declare interval variable outside the function
+
+                function updateCountdown() {
+                    const now = new Date().getTime();
+                    const distance = targetDate - now;
+
+                    // Check if the date parsing was successful
+                    if (isNaN(targetDate)) {
+                        clearInterval(interval);
+                        countdownElement.innerHTML = "Erro na data alvo.";
+                        console.error("Invalid targetDate format or value.");
+                        return;
+                    }
+
+                    if (distance < 0) {
+                        clearInterval(interval);
+                        countdownElement.innerHTML = "PROMOÇÃO ENCERRADA!";
+                        countdownElement.style.color = "#FF6347";
+                        countdownElement.style.fontWeight = "bold";
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    daysEl.innerText = days < 10 ? '0' + days : days;
+                    hoursEl.innerText = hours < 10 ? '0' + hours : hours;
+                    minutesEl.innerText = minutes < 10 ? '0' + minutes : minutes;
+                    secondsEl.innerText = seconds < 10 ? '0' + seconds : seconds;
+                }
+
+                // Add an initial check for the date validity before starting the interval
+                if (isNaN(targetDate)) {
+                    countdownElement.innerHTML = "Erro na configuração da data.";
+                    console.error("Invalid targetDate immediately after parsing.");
+                } else {
+                    updateCountdown(); // Initial call
+                    interval = setInterval(updateCountdown, 1000); // Update every second
+                }
+            } else {
+                console.error("Um ou mais elementos do contador não foram encontrados no HTML.");
+                if (countdownElement) {
+                    countdownElement.innerText = "Erro ao carregar contador.";
+                }
+            }
+
+            // --- Table Row Hover/Click (Optional Enhancements) ---
+            const tableRows = document.querySelectorAll('.tabela-precos tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    console.log('Selecionado:', this.cells[0].innerText);
+                    // Optional: Add visual feedback on click
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
